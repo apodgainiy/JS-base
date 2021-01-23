@@ -123,3 +123,366 @@ alert("Арифметические функции\na="+a+" b="+b+"\na+b="+mathO
     "Ваша сумма в 120104 рубля успешно зачислена." - в случае если пользователь ввел 120104.
     То есть ваша задача выводить слово «рубль» в правильном падеже, в зависимости от введенного числа.
 */
+
+/**
+ * Ф-я возвращает последний символ полученной строки
+ * @param str - строка либо число
+ * @returns {string}
+ */
+const getLastChar = (str) => String(str.charAt(str.length-1));
+
+/**
+ * Ф-я возвращает слово "рубль" в нужном падеже для полученного числа
+ * @param num число
+ * @returns {string}
+ */
+function getEndingRub (num) {
+    switch (getLastChar(String(num))){
+        case "1":
+            return "рубль";
+        case "2":
+        case "3":
+        case "4":
+            return "рубля";
+        case "5":
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+        case "0":
+            return "рублей";
+        default:
+            return "ошибка";
+    }
+}
+
+let userNumber = prompt("Введите сумму для зачисления на счёт.");
+if (!Number(userNumber)) {
+    alert("Введённое значение не является числом");
+} else {
+    alert(`Ваша сумма в ${userNumber} (${convertNumberToText(userNumber, "male")}) ${getEndingRub(userNumber)} успешно зачислена.`);
+}
+
+
+
+
+/*
+Здравствуйте. Что-то я заморочился, и решил сделать вывод числа текстом. Заняло это у меня примерно часа 4, и ещё пару часов на отладку. Сначала нужно было продумать алгоритм (из-за особенностей числительных русского языка). Потом писал код, постепенно совершенствуя алгоритм. Буду благодарен, если прокомментируете мой код. Допускаю, что из-за пока ещё базовых знаний, изобрёл велосипед. И всё можно было сделать проще :)
+* */
+
+
+
+/**
+ * Ф-я возвращает переданную строку задом наперед
+ * @param str {string}
+ * @returns {string}
+ */
+function reverseString(str) {
+    let reverseStr = "";
+    for (let i = str.length-1; i >= 0 ; i--){
+        reverseStr +=str[i];
+    }
+    return reverseStr;
+}
+
+
+/**
+ * Ф-я переводит число в текст
+ * @param num Число в строковом или числовом формате
+ * @param gender {string} "male" | "female" Род, для формирования окончания (напр: один рубль или одна йена)
+ * @returns {string}
+ */
+function convertNumberToText(num, gender) {
+    num = reverseString(String(num));
+    let numSeparate = [];
+    let n = 0;
+    let s = "";
+    for (let i = 0; i < num.length; i++){
+        s += num[i];
+        if ((i+1) % 3 === 0) {
+            numSeparate[n] = classCheck(s, n++, gender);
+            s = "";
+        }
+    }
+    if (s) {
+        numSeparate[n] = classCheck(s, n++, gender);
+        s = "";
+    }
+
+    for (let i = numSeparate.length-1; i >= 0 ; i--){
+        s += numSeparate[i];
+    }
+    return s;
+}
+
+/**
+ * Ф-я возвращает трёхзначное число словами в зависимости от пола. Число должно быть перевернуто
+ * @param num Число перевернутое задом наперед
+ * @param gender {string} "male" | "female" Род, для формирования окончания (напр: один миллион или одна тысяча)
+ */
+function hundredGender (num, gender) {
+    String(num);
+    let result = [];
+
+        if (num[1] === "1") {
+            switch (num[0]){
+                case "0":
+                    result[0] = "десять";
+                    break;
+                case "1":
+                    result[0] = "одинадцать";
+                    break;
+                case "2":
+                    result[0] = "двенадцать";
+                    break;
+                case "3":
+                    result[0] = "тринадцать";
+                    break;
+                case "4":
+                    result[0] = "четырнадцать";
+                    break;
+                case "5":
+                    result[0] = "пятнадцать";
+                    break;
+                case "6":
+                    result[0] = "шестнадцать";
+                    break;
+                case "7":
+                    result[0] = "семнадцать";
+                    break;
+                case "8":
+                    result[0] = "восемнадцать";
+                    break;
+                case "9":
+                    result[0] = "девятнадцать";
+                    break;
+            }
+            switch (num[2]){
+                case "0":
+                    break;
+                case "1":
+                    result[2] = "сто ";
+                    break;
+                case "2":
+                    result[2] = "двести ";
+                    break;
+                case "3":
+                    result[2] = "триста ";
+                    break;
+                case "4":
+                    result[2] = "четыреста ";
+                    break;
+                case "5":
+                    result[2] = "пятьсот ";
+                    break;
+                case "6":
+                    result[2] = "шестьсот ";
+                    break;
+                case "7":
+                    result[2] = "семьсот ";
+                    break;
+                case "8":
+                    result[2] = "восемьсот ";
+                    break;
+                case "9":
+                    result[2] = "девятьсот ";
+                    break;
+            }
+
+        } else {
+            switch (num[0]){
+                case "0":
+                    break;
+                case "1":
+                    gender==="male"?result[0] = "один":result[0] = "одна";
+                    break;
+                case "2":
+                    gender==="male"?result[0] = "два":result[0] = "две";
+                    break;
+                case "3":
+                    result[0] = "три";
+                    break;
+                case "4":
+                    result[0] = "четыре";
+                    break;
+                case "5":
+                    result[0] = "пять";
+                    break;
+                case "6":
+                    result[0] = "шесть";
+                    break;
+                case "7":
+                    result[0] = "семь";
+                    break;
+                case "8":
+                    result[0] = "восемь";
+                    break;
+                case "9":
+                    result[0] = "девять";
+                    break;
+            }
+            switch (num[1]){
+                case "0":
+                case "1":
+                    break;
+                case "2":
+                    result[1] = "двадцать ";
+                    break;
+                case "3":
+                    result[1] = "тридцать ";
+                    break;
+                case "4":
+                    result[1] = "сорок ";
+                    break;
+                case "5":
+                    result[1] = "пятьдесят ";
+                    break;
+                case "6":
+                    result[1] = "шестьдесят ";
+                    break;
+                case "7":
+                    result[1] = "семьдесят ";
+                    break;
+                case "8":
+                    result[1] = "восемьдесят ";
+                    break;
+                case "9":
+                    result[1] = "девяносто ";
+                    break;
+            }
+            switch (num[2]){
+                case "0":
+                    break;
+                case "1":
+                    result[2] = "сто ";
+                    break;
+                case "2":
+                    result[2] = "двести ";
+                    break;
+                case "3":
+                    result[2] = "триста ";
+                    break;
+                case "4":
+                    result[2] = "четыреста ";
+                    break;
+                case "5":
+                    result[2] = "пятьсот ";
+                    break;
+                case "6":
+                    result[2] = "шестьсот ";
+                    break;
+                case "7":
+                    result[2] = "семьсот ";
+                    break;
+                case "8":
+                    result[2] = "восемьсот ";
+                    break;
+                case "9":
+                    result[2] = "девятьсот ";
+                    break;
+            }
+        }
+    return `${result[2]?result[2]:""}${result[1]?result[1]:""}${result[0]?result[0]:""}`;
+
+}
+
+/**
+ * Ф-я добавляет окончание к названию класса (не уверен что правильно это назвал. Имеется ввиду окончание таких слов, как: тысяча, миллион, миллиард), в зависимости от первой цифры переданного числа
+ * @param num число задом наперёд. Для которого нужно правильно написать класс
+ * @param root корень слова (напр: тысяч, миллион, миллиард)
+ * @param gender пол корня (male | female)
+ * @returns {string|*}
+ */
+function classGender (num, root, gender){
+    String(num);
+    if (gender === "female") {
+        if (num[1] === "1"){
+            return root;
+        } else {
+            switch (num[0]) {
+                case "1":
+                    return root + "а";
+                case "2":
+                case "3":
+                case "4":
+                    return root + "и";
+                case "5":
+                case "6":
+                case "7":
+                case "8":
+                case "9":
+                case "0":
+                    return root;
+            }
+        }
+    }
+    if (gender === "male") {
+        if (num[1] === "1"){
+            return root + "ов";
+        } else {
+            switch (num[0]) {
+                case "1":
+                    return root;
+                case "2":
+                case "3":
+                case "4":
+                    return root + "а";
+                case "5":
+                case "6":
+                case "7":
+                case "8":
+                case "9":
+                case "0":
+                    return root + "ов";
+            }
+        }
+    }
+}
+
+/**
+ * Ф-я получает трехзначное число и номер класса (0 - единицы; 1 - тысячи; 2 - миллионы; 3; 4)
+ * @param number трёхзначное число задом наперед
+ * @param classNumber номер класса
+ * @param gender {string} "male" | "female" Род, для формирования окончания единиц(напр: один рубль или одна йена)
+ * @returns {string}
+ */
+function classCheck (number, classNumber, gender) {
+    let result = "";
+    switch (classNumber){
+        case 0:
+            return hundredGender(number, gender);
+        case 1:
+            if (number === "000"){
+                return "";
+            } else {
+                return hundredGender(number, "female") + " " + classGender(number, "тысяч", "female") + " ";
+            }
+        case 2:
+            if (number === "000"){
+                return "";
+            } else {
+                return hundredGender(number, "male") + " " + classGender(number, "миллион", "male") + " ";
+            }
+        case 3:
+            if (number === "000"){
+                return "";
+            } else {
+                return hundredGender(number, "male") + " " + classGender(number, "миллиард", "male") + " ";
+            }
+        case 4:
+            if (number === "000"){
+                return "";
+            } else {
+                return hundredGender(number, "male") + " " + classGender(number, "триллион", "male") + " ";
+            }
+    }
+}
+/*тестировал*/
+let n = +prompt();
+alert(`${n} (${convertNumberToText(n, "male")}) ${getEndingRub(n)}`);
+
+
+for (let i = 0; i < 20; i++){
+    let num = Math.abs(randomNumber(999999999999));
+    console.log(`${num} (${convertNumberToText(num, "male")}) ${getEndingRub(num)}`);
+}
