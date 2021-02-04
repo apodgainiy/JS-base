@@ -29,7 +29,14 @@
     и выведите их в консоль. -->
 
     <script>
+        "use strict";
+        let classLinkInBody = document.querySelectorAll('div[class="card-body"] a[class="card-link"]');
+        console.log(classLinkInBody);
+        console.dir(classLinkInBody);
 
+        classLinkInBody.forEach(function(input) {
+            console.log(input.innerHTML);
+        });
     </script>
 </body>
 
