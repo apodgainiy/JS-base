@@ -16,7 +16,13 @@
     2. Проверьте, есть ли в ссылке текст "ссылка", и если нет, то добавьте. -->
 
     <script>
-        
+        "use strict"
+        let link = document.getElementsByTagName('a');
+        for(let i=0; i<link.length;i++){
+            if (!(link[i].innerHTML === 'ссылка')){
+                link[i].innerHTML = 'ссылка';
+            }
+        }
     </script>
 </body>
 </html>
