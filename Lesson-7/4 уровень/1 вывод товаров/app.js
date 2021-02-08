@@ -2,13 +2,16 @@
 /* 
 Разметка товара:
 
-<div class="product">
-    <div>${здесь_название_товара}</div>
-    <img src="${здесь путь до картинки}" alt="">
-    <div>${здесь_цена}</div>
-    <a href="https://example.com/producs/${здесь_id_товара}">Подробнее</a>
+<div class="products">
+    <div>${products.category[i].name}</div>
+    <img src="${products.category[i].imageUrl}" alt="">
+    <div>${products.category[i].price}</div>
+    <a href="https://example.com/producs/${products.category[i].id}">Подробнее</a>
 </div>
 */
+let product = document.querySelector('.products');
+let buttons = document.querySelectorAll('button');
+buttons.forEach(button => button.addEventListener('click', clickHandler));
 
 const products = {
     phones: [
@@ -82,10 +85,10 @@ const products = {
  */
 function clickHandler(event) {
     //вам нужно очищать содержимое .products
-    
+    product.innerHTML = '';
     //в showCategory надо передать строку с типом категории, тип берите
     //из атрибута data-type у кнопки, по которой кликнули.
-    
+    showCategory(event.target.dataset.type);
 }
 
 /**
@@ -96,7 +99,11 @@ function clickHandler(event) {
  * по которой кликнули.
  */
 function showCategory(category) {
-    
+    let generateProducts = '';
+    for(let i=0; i<products[category].length; i++){
+        generateProducts += getProductMarkup(products[category][i]);
+    }
+    product.innerHTML = generateProducts;
 }
 
 /**
@@ -109,5 +116,10 @@ function showCategory(category) {
  * в верху этого файла.
  */
 function getProductMarkup(product) {
-
+    return `<div className="products">
+            <div>${product.name}</div>
+            <img src="${product.imageUrl}" alt="">
+            <div>${product.price}</div>
+            <a href="https://example.com/producs/${product.id}">Подробнее</a>
+            </div>`;
 }

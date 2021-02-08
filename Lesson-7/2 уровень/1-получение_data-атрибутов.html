@@ -20,7 +20,9 @@
     -->
 
     <script>
-        
+        'use strict';
+        let buttons = document.querySelectorAll('button');
+        buttons.forEach(button => button.addEventListener('click', event => console.dir(`data-id="${button.dataset.id}" data-value="${button.dataset.value}"`)));
     </script>
 </body>
 </html>

@@ -1,9 +1,14 @@
 'use strict';
-const texts = {
-    text1: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-    text2: 'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.',
-    text3: 'Проснувшись однажды утром после беспокойного сна, Грегор Замза обнаружил.'
-};
+let tabText = document.querySelector('.text');
+let navLinks = document.querySelectorAll('.nav-link');
+
+navLinks.forEach(elem => elem.addEventListener('click', clickHandler));
+
+const texts = [
+    'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.',
+    'Проснувшись однажды утром после беспокойного сна, Грегор Замза обнаружил.'
+];
 
 /* 
 1. Получите ссылку на .text, например с помощью querySelector
@@ -20,7 +25,8 @@ const texts = {
 function clickHandler(event) {
     // здесь вызывайте changeText и changeActiveClass, и передавайте
     // им объект события.
-   
+   changeText(event);
+   changeActiveClass(event);
 }
 
 /**
@@ -29,7 +35,8 @@ function clickHandler(event) {
  * @param {MouseEvent} event 
  */
 function changeActiveClass(event) {
-    
+    document.querySelector('.active').classList.remove('active');
+    event.target.classList.add('active');
 }
 
 /**
@@ -39,5 +46,10 @@ function changeActiveClass(event) {
  * @param {MouseEvent} event 
  */
 function changeText(event) {
-    
+    for(let i=0; i<navLinks.length; i++){
+        if(navLinks[i] === event.target){
+            /*сильно долго думал над решением. По итогу поменял объект на массив, чтобы можно было обращаться к индексу массива в зависимости от выбраной вкладки*/
+            tabText.innerHTML = texts[i];
+        }
+    }
 }
